@@ -1,12 +1,7 @@
 import { Negociacoes } from "../models/negociacoes.js";
+import { ElementoDOM } from "./elemento-dom.js";
 
-export class NegociacoesView {
-
-    private elementoDOM : HTMLElement;
-
-    constructor (seletor : string) {
-        this.elementoDOM = document.querySelector(seletor);
-    }
+export class NegociacoesView extends ElementoDOM {
 
     template (model : Negociacoes) : string {
         return `

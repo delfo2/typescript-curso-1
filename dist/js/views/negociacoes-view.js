@@ -1,7 +1,5 @@
-export class NegociacoesView {
-    constructor(seletor) {
-        this.elementoDOM = document.querySelector(seletor);
-    }
+import { ElementoDOM } from "./elemento-dom.js";
+export class NegociacoesView extends ElementoDOM {
     template(model) {
         return `
             <table class="table table-hover table-bordered">
