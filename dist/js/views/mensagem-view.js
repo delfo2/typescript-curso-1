@@ -5,8 +5,4 @@ export class MensagemView extends ElementoDOM {
             <p class="alert alert-info">${model}</p>
         `;
     }
-    update(model) {
-        const template = this.template(model);
-        this.elementoDOM.innerHTML = template;
-    }
 }

@@ -1,7 +1,7 @@
 import { Negociacoes } from "../models/negociacoes.js";
 import { ElementoDOM } from "./elemento-dom.js";
 
-export class NegociacoesView extends ElementoDOM {
+export class NegociacoesView extends ElementoDOM<Negociacoes> {
 
     template (model : Negociacoes) : string {
         return `
@@ -27,9 +27,5 @@ export class NegociacoesView extends ElementoDOM {
                 </tbody>
             </table>
         `;
-    }
-
-    update (model : Negociacoes) : void {
-        this.elementoDOM.innerHTML = this.template(model);
     }
 }

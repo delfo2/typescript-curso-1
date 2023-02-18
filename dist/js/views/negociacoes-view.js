@@ -25,7 +25,4 @@ export class NegociacoesView extends ElementoDOM {
             </table>
         `;
     }
-    update(model) {
-        this.elementoDOM.innerHTML = this.template(model);
-    }
 }
