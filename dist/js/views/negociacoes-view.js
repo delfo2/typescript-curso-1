@@ -15,7 +15,7 @@ export class NegociacoesView extends ElementoDOM {
                     ${model.lista().map(array => {
             return `
                             <tr>
-                                <td>${new Intl.DateTimeFormat().format(array.data)}</td>
+                                <td>${this.formatar(array.data)}</td>
                                 <td>${array.quantidade}</td>
                                 <td>${array.valor}</td>
                             </tr>
@@ -24,5 +24,8 @@ export class NegociacoesView extends ElementoDOM {
                 </tbody>
             </table>
         `;
+    }
+    formatar(data) {
+        return new Intl.DateTimeFormat().format(data);
     }
 }

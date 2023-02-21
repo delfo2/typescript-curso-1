@@ -3,7 +3,7 @@ import { ElementoDOM } from "./elemento-dom.js";
 
 export class NegociacoesView extends ElementoDOM<Negociacoes> {
 
-    template (model : Negociacoes) : string {
+    protected template (model : Negociacoes) : string {
         return `
             <table class="table table-hover table-bordered">
                 <thead>
@@ -18,7 +18,7 @@ export class NegociacoesView extends ElementoDOM<Negociacoes> {
                     ${model.lista().map(array => {
                         return `
                             <tr>
-                                <td>${new Intl.DateTimeFormat().format(array.data)}</td>
+                                <td>${this.formatar(array.data)}</td>
                                 <td>${array.quantidade}</td>
                                 <td>${array.valor}</td>
                             </tr>
@@ -27,5 +27,9 @@ export class NegociacoesView extends ElementoDOM<Negociacoes> {
                 </tbody>
             </table>
         `;
+    }
+
+    private formatar (data : Date) : string {
+        return new Intl.DateTimeFormat().format(data);
     }
 }
