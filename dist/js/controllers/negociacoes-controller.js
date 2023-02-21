@@ -1,3 +1,4 @@
+import { DiasDaSemana } from "../enums/DiasDaSemana.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
 import { MensagemView } from "../views/mensagem-view.js";
@@ -23,8 +24,7 @@ export class NegociacaoController {
         this.limpaFormulario();
     }
     validaDiaUtil(data) {
-        //fazer enum;;;
-        return data.getDay() > 0 && data.getDay() < 6;
+        return data.getDay() > DiasDaSemana.DOMINGO && data.getDay() < DiasDaSemana.SABADO;
     }
     criaNegociacao() {
         const exp = /-/g;
