@@ -1,12 +1,27 @@
 export abstract class ElementoDOM<T> {
     protected elementoDOM : HTMLElement;
 
-    constructor(selector : string) {
-        this.elementoDOM = document.querySelector(selector);
+    private escapar = false;
+
+    constructor(selector : string, escapar? : boolean) {
+        const elemento = document.querySelector(selector);
+        if(elemento) {
+            this.elementoDOM = elemento as HTMLElement;
+        } else {
+            throw Error(`o seletor ${selector} não conseguiu encontrar o html element`);
+        }
+        if(escapar) {
+            this.escapar = escapar;
+        }
     }
     
     public update (model : T) : void {
-        const template = this.template(model);
+        let template = this.template(model);
+
+        if(this.escapar) {
+            template = template.replace(/<script>[\s\S]*?<script>/, "");
+        }
+
         this.elementoDOM.innerHTML = template;
     }
 
