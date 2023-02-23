@@ -1,3 +1,4 @@
+import { logarTempoDeExecucao } from "../decorator/logar-tempo-de-execução.js";
 import { DiasDaSemana } from "../enums/DiasDaSemana.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
@@ -18,7 +19,8 @@ export class NegociacaoController {
         this.inputValor = document.querySelector('#valor') as HTMLInputElement;
         this.negociacaoView.update(this.negociacoes);
     }
-    
+
+    @logarTempoDeExecucao()
     public adiciona (): void {
         //função pública que pode ser acessada fora da classe e que retorna void
         const negociacao = Negociacao.criaDe(
