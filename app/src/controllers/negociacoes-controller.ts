@@ -1,3 +1,4 @@
+import { inspect } from "../decorator/inspect.js";
 import { logarTempoDeExecucao } from "../decorator/logar-tempo-de-execução.js";
 import { DiasDaSemana } from "../enums/DiasDaSemana.js";
 import { Negociacao } from "../models/negociacao.js";
@@ -10,8 +11,8 @@ export class NegociacaoController {
     private inputQuantidade: HTMLInputElement;
     private inputValor: HTMLInputElement;
     private negociacoes = new Negociacoes();
-    private negociacaoView = new NegociacoesView("#negociacoesView", true);
-    private mensagemView = new MensagemView('#mensagemView', true)
+    private negociacaoView = new NegociacoesView("#negociacoesView");
+    private mensagemView = new MensagemView('#mensagemView')
     
     constructor () {
         this.inputData = document.querySelector('#data') as HTMLInputElement;
@@ -20,7 +21,7 @@ export class NegociacaoController {
         this.negociacaoView.update(this.negociacoes);
     }
 
-    @logarTempoDeExecucao()
+    @logarTempoDeExecucao(true)
     public adiciona (): void {
         //função pública que pode ser acessada fora da classe e que retorna void
         const negociacao = Negociacao.criaDe(
@@ -37,6 +38,7 @@ export class NegociacaoController {
         this.limpaFormulario();
     }
 
+    @inspect()
     private validaDiaUtil (data : Date) : Boolean {
         return data.getDay() > DiasDaSemana.DOMINGO && data.getDay() < DiasDaSemana.SABADO;
     }

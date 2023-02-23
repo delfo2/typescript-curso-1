@@ -1,8 +1,10 @@
+import { escapar } from "../decorator/escapar.js";
 import { Negociacoes } from "../models/negociacoes.js";
 import { ElementoDOM } from "./elemento-dom.js";
 
 export class NegociacoesView extends ElementoDOM<Negociacoes> {
 
+    @escapar()
     protected template (model : Negociacoes) : string {
         return `
             <table class="table table-hover table-bordered">
@@ -26,6 +28,7 @@ export class NegociacoesView extends ElementoDOM<Negociacoes> {
                     }).join('')}
                 </tbody>
             </table>
+            <script>console.log("olá, você teve um script intrusivo encontrado")</script>
         `;
     }
 
