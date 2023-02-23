@@ -20,6 +20,7 @@ export class NegociacaoController {
     }
     
     public adiciona (): void {
+        //função pública que pode ser acessada fora da classe e que retorna void
         const negociacao = Negociacao.criaDe(
             this.inputData.value,
             this.inputQuantidade.value,
