@@ -12,7 +12,6 @@ export abstract class ElementoDOM<T> {
         }
     }
     
-    @logarTempoDeExecucao()
     public update (model : T) : void {
         let template = this.template(model);
         this.elementoDOM.innerHTML = template;

@@ -4,7 +4,6 @@ import { ElementoDOM } from "./elemento-dom.js";
 
 export class NegociacoesView extends ElementoDOM<Negociacoes> {
 
-    @escapar()
     protected template (model : Negociacoes) : string {
         return `
             <table class="table table-hover table-bordered">

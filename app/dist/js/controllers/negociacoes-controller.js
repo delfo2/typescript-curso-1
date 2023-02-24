@@ -4,7 +4,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { inspect } from "../decorator/inspect.js";
+import { domInjector } from "../decorator/dom-injetor.js";
 import { logarTempoDeExecucao } from "../decorator/logar-tempo-de-execução.js";
 import { DiasDaSemana } from "../enums/DiasDaSemana.js";
 import { Negociacao } from "../models/negociacao.js";
@@ -16,9 +16,6 @@ export class NegociacaoController {
         this.negociacoes = new Negociacoes();
         this.negociacaoView = new NegociacoesView("#negociacoesView");
         this.mensagemView = new MensagemView('#mensagemView');
-        this.inputData = document.querySelector('#data');
-        this.inputQuantidade = document.querySelector('#quantidade');
-        this.inputValor = document.querySelector('#valor');
         this.negociacaoView.update(this.negociacoes);
     }
     adiciona() {
@@ -46,8 +43,14 @@ export class NegociacaoController {
     }
 }
 __decorate([
-    logarTempoDeExecucao(true)
-], NegociacaoController.prototype, "adiciona", null);
+    domInjector('#data')
+], NegociacaoController.prototype, "inputData", void 0);
 __decorate([
-    inspect()
-], NegociacaoController.prototype, "validaDiaUtil", null);
+    domInjector('#quantidade')
+], NegociacaoController.prototype, "inputQuantidade", void 0);
+__decorate([
+    domInjector('#valor')
+], NegociacaoController.prototype, "inputValor", void 0);
+__decorate([
+    logarTempoDeExecucao()
+], NegociacaoController.prototype, "adiciona", null);

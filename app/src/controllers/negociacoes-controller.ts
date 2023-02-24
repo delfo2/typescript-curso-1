@@ -1,3 +1,4 @@
+import { domInjector } from "../decorator/dom-injetor.js";
 import { inspect } from "../decorator/inspect.js";
 import { logarTempoDeExecucao } from "../decorator/logar-tempo-de-execução.js";
 import { DiasDaSemana } from "../enums/DiasDaSemana.js";
@@ -7,21 +8,21 @@ import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacoesView } from "../views/negociacoes-view.js";
 
 export class NegociacaoController {
+    @domInjector('#data')
     private inputData: HTMLInputElement;
+    @domInjector('#quantidade')
     private inputQuantidade: HTMLInputElement;
+    @domInjector('#valor')
     private inputValor: HTMLInputElement;
     private negociacoes = new Negociacoes();
     private negociacaoView = new NegociacoesView("#negociacoesView");
     private mensagemView = new MensagemView('#mensagemView')
     
     constructor () {
-        this.inputData = document.querySelector('#data') as HTMLInputElement;
-        this.inputQuantidade = document.querySelector('#quantidade') as HTMLInputElement;
-        this.inputValor = document.querySelector('#valor') as HTMLInputElement;
         this.negociacaoView.update(this.negociacoes);
     }
 
-    @logarTempoDeExecucao(true)
+    @logarTempoDeExecucao()
     public adiciona (): void {
         //função pública que pode ser acessada fora da classe e que retorna void
         const negociacao = Negociacao.criaDe(
@@ -38,7 +39,6 @@ export class NegociacaoController {
         this.limpaFormulario();
     }
 
-    @inspect()
     private validaDiaUtil (data : Date) : Boolean {
         return data.getDay() > DiasDaSemana.DOMINGO && data.getDay() < DiasDaSemana.SABADO;
     }
