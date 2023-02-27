@@ -10,3 +10,12 @@ if(form) {
 } else {
     throw Error(`o formulário ${form} não pode ser encontrado pelo query selector.`);
 }
+
+const btnImport = document.querySelector('#botao-importa');
+if(btnImport) {
+    btnImport.addEventListener('click', () => {
+        controller.importaDados();
+    })
+} else {
+    throw Error(`O botão ${btnImport} não foi encontrado.`);
+}

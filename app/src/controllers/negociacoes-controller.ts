@@ -2,6 +2,7 @@ import { domInjector } from "../decorator/dom-injetor.js";
 import { inspect } from "../decorator/inspect.js";
 import { logarTempoDeExecucao } from "../decorator/logar-tempo-de-execução.js";
 import { DiasDaSemana } from "../enums/DiasDaSemana.js";
+import { NegociacoesAPI } from "../interface/Negociacoes-API.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
 import { MensagemView } from "../views/mensagem-view.js";
@@ -23,7 +24,7 @@ export class NegociacaoController {
     }
 
     @logarTempoDeExecucao()
-    public adiciona (): void {
+    public adiciona () : void {
         //função pública que pode ser acessada fora da classe e que retorna void
         const negociacao = Negociacao.criaDe(
             this.inputData.value,
@@ -37,6 +38,22 @@ export class NegociacaoController {
         this.negociacoes.adiciona(negociacao);
         this.atualizaView();
         this.limpaFormulario();
+    }
+
+    public importaDados () : void {
+        fetch('http://localhost:8080/dados')
+            .then(res => res.json())
+            .then((dados : Array<NegociacoesAPI>) => {
+                return dados.map(dado => {
+                    return new Negociacao(new Date(), dado.vezes, dado.montante)
+                })
+            })
+            .then(negociacoesAPI => {
+                for(let novaNegociacao of negociacoesAPI) {
+                    this.negociacoes.adiciona(novaNegociacao);
+                }
+                this.atualizaView();
+            })
     }
 
     private validaDiaUtil (data : Date) : Boolean {
