@@ -5,17 +5,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { domInjector } from "../decorator/dom-injetor.js";
-import { logarTempoDeExecucao } from "../decorator/logar-tempo-de-execução.js";
 import { DiasDaSemana } from "../enums/DiasDaSemana.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
+import { NegociacoesServiceAPI } from "../services/Negocacoes-service-api.js";
 import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacoesView } from "../views/negociacoes-view.js";
+import { Imprimir } from "../utils/imprimir.js";
 export class NegociacaoController {
     constructor() {
         this.negociacoes = new Negociacoes();
         this.negociacaoView = new NegociacoesView("#negociacoesView");
         this.mensagemView = new MensagemView('#mensagemView');
+        this.negociacoesService = new NegociacoesServiceAPI;
         this.negociacaoView.update(this.negociacoes);
     }
     adiciona() {
@@ -25,15 +27,18 @@ export class NegociacaoController {
             return;
         }
         this.negociacoes.adiciona(negociacao);
+        Imprimir(negociacao, this.negociacoes);
         this.atualizaView();
         this.limpaFormulario();
     }
     importaDados() {
-        fetch('http://localhost:8080/dados')
-            .then(res => res.json())
-            .then((dados) => {
-            return dados.map(dado => {
-                return new Negociacao(new Date(), dado.vezes, dado.montante);
+        this.negociacoesService
+            .obterNegociacoesDoDia()
+            .then(negociacoesAPI => {
+            return negociacoesAPI.filter(negociacoesAPI => {
+                return !this.negociacoes
+                    .lista()
+                    .some(item => item.isTheSame(negociacoesAPI));
             });
         })
             .then(negociacoesAPI => {
@@ -66,6 +71,3 @@ __decorate([
 __decorate([
     domInjector('#valor')
 ], NegociacaoController.prototype, "inputValor", void 0);
-__decorate([
-    logarTempoDeExecucao()
-], NegociacaoController.prototype, "adiciona", null);
